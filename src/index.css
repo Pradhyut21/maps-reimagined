@@ -1,0 +1,406 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Poppins:wght@400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Base styles and variables */
+:root {
+  /* Color palette */
+  --color-primary-50: #f8f5f2;
+  --color-primary-100: #f1eae0;
+  --color-primary-200: #e3d5c0;
+  --color-primary-300: #d4bf9f;
+  --color-primary-400: #c5a97e;
+  --color-primary-500: #b6935d;
+  --color-primary-600: #8e764a;
+  --color-primary-700: #675838;
+  --color-primary-800: #3f3a2f;
+  --color-primary-900: #2a2621;
+  --color-primary-950: #1a1714;
+  
+  --color-accent-50: #fef9e8;
+  --color-accent-100: #fdf1c5;
+  --color-accent-200: #fce38f;
+  --color-accent-300: #fad04e;
+  --color-accent-400: #f8bd24;
+  --color-accent-500: #e8b959;
+  --color-accent-600: #d99b1f;
+  --color-accent-700: #b47719;
+  --color-accent-800: #915c17;
+  --color-accent-900: #784c19;
+  --color-accent-950: #45270a;
+  
+  --color-secondary: #5a4a42;
+  --color-secondary-dark: #3d2f2a;
+  --color-secondary-light: #7a6a62;
+  
+  --color-white: #ffffff;
+  --color-black: #000000;
+  
+  /* Typography */
+  --font-sans: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  --font-display: 'Poppins', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+  
+  /* Spacing */
+  --spacing-1: 0.25rem;
+  --spacing-2: 0.5rem;
+  --spacing-3: 0.75rem;
+  --spacing-4: 1rem;
+  --spacing-5: 1.25rem;
+  --spacing-6: 1.5rem;
+  --spacing-8: 2rem;
+  --spacing-10: 2.5rem;
+  --spacing-12: 3rem;
+  
+  /* Border radius */
+  --radius-sm: 0.25rem;
+  --radius-md: 0.375rem;
+  --radius-lg: 0.5rem;
+  --radius-xl: 0.75rem;
+  --radius-2xl: 1rem;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
+  --shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.1), 0 1px 2px 0 rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+  --shadow-lg: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05);
+  --shadow-xl: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+  --shadow-2xl: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+  --shadow-inner: inset 0 2px 4px 0 rgba(0, 0, 0, 0.06);
+  --shadow-glow: 0 0 10px 2px rgba(232, 185, 89, 0.5);
+}
+
+/* Base styles */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  border-color: var(--color-primary-800);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-sans);
+  background-color: var(--color-primary-950);
+  color: var(--color-white);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  line-height: 1.5;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-display);
+  font-weight: 600;
+  line-height: 1.2;
+  margin-top: 0;
+  margin-bottom: 0.5em;
+}
+
+p {
+  margin-top: 0;
+  margin-bottom: 1rem;
+}
+
+a {
+  color: var(--color-accent-500);
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+}
+
+a:hover {
+  color: var(--color-accent-400);
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background-color: rgba(61, 47, 42, 0.2);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(232, 185, 89, 0.5);
+  border-radius: 4px;
+  transition: background-color 0.2s ease-in-out;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background-color: rgba(232, 185, 89, 0.7);
+}
+
+/* Leaflet overrides */
+.leaflet-container {
+  background-color: var(--color-primary-900);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-md);
+  width: 100%;
+  height: 100%;
+}
+
+.leaflet-popup-content-wrapper {
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  border: 1px solid rgba(232, 185, 89, 0.2);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg);
+  padding: 0;
+  margin: 0;
+}
+
+.leaflet-popup-content {
+  margin: 0;
+  line-height: 1.5;
+  font-size: 0.875rem;
+}
+
+.leaflet-popup-tip {
+  background-color: var(--color-secondary);
+  border: 1px solid rgba(232, 185, 89, 0.2);
+}
+
+.leaflet-control-attribution {
+  background-color: transparent !important;
+  font-size: 0.75rem;
+  color: rgba(255, 255, 255, 0.3) !important;
+  padding: 0.25rem 0.5rem;
+}
+
+.leaflet-control-attribution a {
+  color: var(--color-accent-500);
+}
+
+/* Animations */
+@keyframes pulse-glow {
+  0%, 100% {
+    box-shadow: 0 0 0 0 rgba(232, 185, 89, 0.7);
+  }
+  70% {
+    box-shadow: 0 0 0 10px rgba(232, 185, 89, 0);
+  }
+}
+
+@keyframes kenburns {
+  0% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+  50% {
+    transform: scale(1.08) translate3d(-2%, -1%, 0);
+  }
+  100% {
+    transform: scale(1) translate3d(0, 0, 0);
+  }
+}
+
+.kenburns-bg {
+  background-position: center;
+  background-size: cover;
+  background-repeat: no-repeat;
+  will-change: transform;
+  transform-origin: center;
+  animation: kenburns 28s ease-in-out infinite;
+}
+
+.waves-fallback {
+  display: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .waves-video {
+    display: none;
+  }
+
+  .waves-fallback {
+    display: block;
+  }
+
+  .kenburns-bg {
+    animation: none;
+    transform: none;
+  }
+}
+
+.animate-pulse-glow {
+  animation: pulse-glow 2s infinite;
+}
+
+/* Utility classes */
+.container {
+  width: 100%;
+  max-width: 1280px;
+  margin-left: auto;
+  margin-right: auto;
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+
+/* Button styles */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: var(--radius-md);
+  padding: 0.5rem 1rem;
+  font-size: 0.875rem;
+  font-weight: 500;
+  line-height: 1.25rem;
+  transition-property: color, background-color, border-color, text-decoration-color, fill, stroke, opacity, box-shadow, transform, filter, backdrop-filter;
+  transition-timing-function: cubic-bezier(0.4, 0, 0.2, 1);
+  transition-duration: 150ms;
+  cursor: pointer;
+  border: 1px solid transparent;
+  background-color: transparent;
+  color: inherit;
+}
+
+.btn:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  box-shadow: 0 0 0 2px var(--color-accent-500), 0 0 0 4px rgba(232, 185, 89, 0.5);
+}
+
+.btn:disabled {
+  opacity: 0.5;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.btn-primary {
+  background-color: var(--color-accent-500);
+  color: var(--color-primary-900);
+  box-shadow: var(--shadow-md);
+  font-weight: 600;
+}
+
+.btn-primary:hover {
+  background-color: rgba(232, 185, 89, 0.9);
+  box-shadow: 0 10px 15px -3px rgba(232, 185, 89, 0.1), 0 4px 6px -2px rgba(232, 185, 89, 0.05);
+}
+
+/* Card component */
+.card {
+  border-radius: var(--radius-xl);
+  border: 1px solid var(--color-primary-800);
+  background-color: var(--color-secondary);
+  color: var(--color-white);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+/* Form inputs */
+.input {
+  display: flex;
+  height: 2.5rem;
+  width: 100%;
+  border-radius: var(--radius-md);
+  border: 1px solid var(--color-primary-800);
+  background-color: var(--color-primary-900);
+  padding: 0.5rem 0.75rem;
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+  color: var(--color-white);
+  transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
+}
+
+.input:focus {
+  outline: 2px solid transparent;
+  outline-offset: 2px;
+  border-color: var(--color-accent-500);
+  box-shadow: 0 0 0 2px var(--color-accent-500), 0 0 0 4px rgba(232, 185, 89, 0.5);
+}
+
+.input::placeholder {
+  color: rgba(255, 255, 255, 0.6);
+  opacity: 1;
+}
+
+.input:disabled {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+/* Layout utilities */
+.flex {
+  display: flex;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-2 {
+  gap: 0.5rem;
+}
+
+.gap-4 {
+  gap: 1rem;
+}
+
+.p-4 {
+  padding: 1rem;
+}
+
+.p-6 {
+  padding: 1.5rem;
+}
+
+.mt-4 {
+  margin-top: 1rem;
+}
+
+.mb-4 {
+  margin-bottom: 1rem;
+}
+
+/* Text utilities */
+.text-sm {
+  font-size: 0.875rem;
+  line-height: 1.25rem;
+}
+
+.text-base {
+  font-size: 1rem;
+  line-height: 1.5rem;
+}
+
+.font-medium {
+  font-weight: 500;
+}
+
+.font-semibold {
+  font-weight: 600;
+}
+
+.text-muted {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+/* Responsive design */
+@media (min-width: 640px) {
+  .container {
+    padding-left: 1.5rem;
+    padding-right: 1.5rem;
+  }
+}
+
+@media (min-width: 1024px) {
+  .container {
+    padding-left: 2rem;
+    padding-right: 2rem;
+  }
+}
