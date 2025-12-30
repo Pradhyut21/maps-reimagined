@@ -183,7 +183,12 @@ const MapPage: React.FC = () => {
   // Get user's current location
   useEffect(() => {
     if (navigator.geolocation) {
-      toast('🙏 Namaste from India — please allow location');
+      // Check if it's the first visit
+      const hasSeenNamaste = localStorage.getItem('hasSeenNamaste');
+      if (!hasSeenNamaste) {
+        toast('🙏 Namaste from India — please allow location');
+        localStorage.setItem('hasSeenNamaste', 'true');
+      }
       navigator.geolocation.getCurrentPosition(
         (position) => {
           const { latitude, longitude } = position.coords;
@@ -440,6 +445,126 @@ const MapPage: React.FC = () => {
 
   return (
     <div className="h-screen w-full relative">
+      {/* Top Bar */}
+      <div className="absolute top-0 left-0 right-0 z-10 p-4">
+        <div className="flex items-center">
+          {/* Search Bar */}
+          <div className="flex-1 relative">
+            <form 
+              onSubmit={handleSearch}
+              className="bg-white bg-opacity-90 rounded-lg shadow-lg overflow-hidden flex items-center"
+            >
+              <button type="submit" className="px-3 text-gray-500">
+                <FiSearch />
+              </button>
+              <input
+                type="text"
+                placeholder="Search for places..."
+                className="flex-1 py-3 pr-4 bg-transparent outline-none text-gray-800"
+                value={searchQuery}
+                onChange={(e) => {
+                  setSearchQuery(e.target.value);
+                  setShowSuggestions(true);
+                }}
+                onFocus={() => setShowSuggestions(true)}
+                onBlur={() => {
+                  setTimeout(() => setShowSuggestions(false), 120);
+                }}
+              />
+            </form>
+
+            <AnimatePresence>
+              {showSuggestions && suggestions.length > 0 && (
+                <motion.div
+                  initial={{ opacity: 0, y: -6 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  exit={{ opacity: 0, y: -6 }}
+                  className="absolute left-0 right-0 mt-2 bg-white rounded-lg shadow-lg overflow-hidden"
+                >
+                  {suggestions.slice(0, 6).map((s) => (
+                    <button
+                      key={s.id}
+                      type="button"
+                      onMouseDown={(e) => e.preventDefault()}
+                      onClick={() => selectSuggestion(s)}
+                      className="w-full text-left px-4 py-3 hover:bg-gray-100 text-gray-800 border-b border-gray-100 last:border-b-0"
+                    >
+                      <div className="text-sm">{s.label}</div>
+                    </button>
+                  ))}
+                </motion.div>
+              )}
+            </AnimatePresence>
+          </div>
+          
+          {/* Filter Button */}
+          <button 
+            onClick={() => setShowFilters(!showFilters)}
+            className="ml-2 p-3 bg-white bg-opacity-90 rounded-lg shadow-lg text-gray-800"
+            aria-label="Filters"
+          >
+            <svg xmlns="http://www.w3.org/2000/svg" className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+            </svg>
+          </button>
+        </div>
+
+        {searchedPlace && (
+          <div className="mt-2 bg-white bg-opacity-90 rounded-lg shadow-lg p-3 flex items-center justify-between gap-3">
+            <div className="text-sm text-gray-800 truncate">{searchedPlace.label}</div>
+            <div className="flex gap-2">
+              <button
+                type="button"
+                onClick={onSaveSearched}
+                className="px-3 py-2 rounded-lg bg-secondary text-white"
+              >
+                Save
+              </button>
+              <button
+                type="button"
+                onClick={onDirectionsToSearched}
+                disabled={!userLocation}
+                className="px-3 py-2 rounded-lg bg-accent-600 hover:bg-accent-500 text-black font-semibold disabled:opacity-50 disabled:cursor-not-allowed"
+              >
+                Directions
+              </button>
+            </div>
+          </div>
+        )}
+        
+        {/* Filter Panel */}
+        <AnimatePresence>
+          {showFilters && (
+            <motion.div 
+              initial={{ opacity: 0, y: -10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: -10 }}
+              className="mt-2 bg-white bg-opacity-90 rounded-lg shadow-lg p-4"
+            >
+              <h3 className="font-medium text-gray-800 mb-3">Filter by Category</h3>
+              <div className="grid grid-cols-2 gap-3">
+                {Object.entries(filters).map(([key, value]) => (
+                  <label key={key} className="flex items-center space-x-2">
+                    <input
+                      type="checkbox"
+                      checked={value}
+                      onChange={() => setFilters(prev => ({
+                        ...prev,
+                        [key]: !prev[key as keyof typeof filters]
+                      }))}
+                      className="rounded text-accent-500 focus:ring-accent-500"
+                    />
+                    <span className="capitalize text-sm text-gray-700">
+                      {key}
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </motion.div>
+          )}
+        </AnimatePresence>
+      </div>
+
       {/* Map Container */}
       <div className="absolute inset-0 z-0">
         <MapContainer

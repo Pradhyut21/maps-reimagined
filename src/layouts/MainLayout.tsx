@@ -49,8 +49,8 @@ const MainLayout: React.FC<{ children?: ReactNode }> = ({ children }) => {
               to={item.path}
               className={`flex flex-col items-center justify-center flex-1 h-full transition-colors ${
                 isActive(item.path)
-                  ? 'text-accent-500'
-                  : 'text-gray-400 hover:text-gray-200'
+                  ? 'text-yellow-300'
+                  : 'text-yellow-400 hover:text-yellow-300'
               }`}
             >
               <div className="relative">
@@ -69,7 +69,7 @@ const MainLayout: React.FC<{ children?: ReactNode }> = ({ children }) => {
           {/* Emergency Button */}
           <button
             onClick={() => setIsEmergencyOpen(true)}
-            className="flex flex-col items-center justify-center flex-1 h-full text-red-500 hover:text-red-400 transition-colors"
+            className="flex flex-col items-center justify-center flex-1 h-full bg-black/70 text-red-500 hover:bg-black/80 hover:text-red-400 transition-colors"
           >
             <div className="relative">
               <FiAlertTriangle size={20} />
@@ -95,7 +95,7 @@ const MainLayout: React.FC<{ children?: ReactNode }> = ({ children }) => {
                   onClick={() => {
                     window.location.href = 'tel:112';
                   }}
-                  className="w-full bg-red-600 hover:bg-red-700 text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center gap-2"
+                  className="w-full bg-red-900 hover:bg-red-800 text-white py-3 px-4 rounded-lg font-medium flex items-center justify-center gap-2"
                 >
                   <FiAlertTriangle /> Call Emergency Services
                 </button>

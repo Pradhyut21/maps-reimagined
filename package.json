@@ -9,6 +9,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@elevenlabs/react": "^0.12.3",
     "@googlemaps/js-api-loader": "^2.0.2",
     "framer-motion": "^11.0.8",
     "leaflet": "^1.9.4",
